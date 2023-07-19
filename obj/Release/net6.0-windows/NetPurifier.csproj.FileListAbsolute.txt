@@ -1,0 +1,17 @@
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\bin\Release\net6.0-windows\NetPurifier.exe
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\bin\Release\net6.0-windows\NetPurifier.deps.json
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\bin\Release\net6.0-windows\NetPurifier.runtimeconfig.json
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\bin\Release\net6.0-windows\NetPurifier.dll
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\bin\Release\net6.0-windows\NetPurifier.pdb
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\NetPurifier.csproj.AssemblyReference.cache
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\NetPurifier.Form1.resources
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\NetPurifier.csproj.GenerateResource.cache
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\NetPurifier.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\NetPurifier.AssemblyInfoInputs.cache
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\NetPurifier.AssemblyInfo.cs
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\NetPurifier.csproj.CoreCompileInputs.cache
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\NetPurifier.dll
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\refint\NetPurifier.dll
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\NetPurifier.pdb
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\NetPurifier.genruntimeconfig.cache
+C:\Users\seref\source\repos\NetPurifier\NetPurifier\obj\Release\net6.0-windows\ref\NetPurifier.dll
