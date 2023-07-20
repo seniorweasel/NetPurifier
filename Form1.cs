@@ -609,7 +609,7 @@ public partial class Form1 : Form
     }
 
     private async void button1_Click(object sender, EventArgs e)
-    {       
+    {
         await DownloadFileFromGitHub("light.bin");
         await DownloadFileFromGitHub("moderate.bin");
         await DownloadFileFromGitHub("strict.bin");
@@ -627,7 +627,7 @@ public partial class Form1 : Form
         string url = "https://sshocean.com/shadowsocks";
 
         // Open the URL in the default browser
-        Process.Start("explorer.exe",url);
+        Process.Start("explorer.exe", url);
     }
 
     private void iPRaceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -636,6 +636,11 @@ public partial class Form1 : Form
 
         // Open the URL in the default browser
         Process.Start("explorer.exe", url);
+    }
+
+    private void label8_Click(object sender, EventArgs e)
+    {
+
     }
 }
 // Dictionary to map trackbar values to filenames

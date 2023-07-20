@@ -95,8 +95,6 @@
             label1 = new Label();
             trackBar1 = new TrackBar();
             tabPage5 = new TabPage();
-            label24 = new Label();
-            label23 = new Label();
             groupBox2 = new GroupBox();
             button8 = new Button();
             button3 = new Button();
@@ -121,7 +119,6 @@
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
-            tabPage5.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             SuspendLayout();
@@ -148,27 +145,27 @@
             // 
             freeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sSHOceanToolStripMenuItem, iPRaceToolStripMenuItem });
             freeToolStripMenuItem.Name = "freeToolStripMenuItem";
-            freeToolStripMenuItem.Size = new Size(180, 22);
+            freeToolStripMenuItem.Size = new Size(123, 22);
             freeToolStripMenuItem.Text = "Free";
             // 
             // sSHOceanToolStripMenuItem
             // 
             sSHOceanToolStripMenuItem.Name = "sSHOceanToolStripMenuItem";
-            sSHOceanToolStripMenuItem.Size = new Size(180, 22);
+            sSHOceanToolStripMenuItem.Size = new Size(129, 22);
             sSHOceanToolStripMenuItem.Text = "SSHOcean";
             sSHOceanToolStripMenuItem.Click += sSHOceanToolStripMenuItem_Click;
             // 
             // iPRaceToolStripMenuItem
             // 
             iPRaceToolStripMenuItem.Name = "iPRaceToolStripMenuItem";
-            iPRaceToolStripMenuItem.Size = new Size(180, 22);
+            iPRaceToolStripMenuItem.Size = new Size(129, 22);
             iPRaceToolStripMenuItem.Text = "IPRace";
             iPRaceToolStripMenuItem.Click += iPRaceToolStripMenuItem_Click;
             // 
             // premiumToolStripMenuItem
             // 
             premiumToolStripMenuItem.Name = "premiumToolStripMenuItem";
-            premiumToolStripMenuItem.Size = new Size(180, 22);
+            premiumToolStripMenuItem.Size = new Size(123, 22);
             premiumToolStripMenuItem.Text = "Premium";
             // 
             // fileToolStripMenuItem
@@ -588,9 +585,9 @@
             groupBox5.Controls.Add(label9);
             groupBox5.Controls.Add(label8);
             groupBox5.Controls.Add(label7);
-            groupBox5.Location = new Point(6, 115);
+            groupBox5.Location = new Point(3, 67);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(306, 161);
+            groupBox5.Size = new Size(456, 209);
             groupBox5.TabIndex = 4;
             groupBox5.TabStop = false;
             groupBox5.Text = "Explanation:";
@@ -599,73 +596,75 @@
             // 
             label13.AutoSize = true;
             label13.ForeColor = Color.FromArgb(192, 0, 192);
-            label13.Location = new Point(6, 125);
+            label13.Location = new Point(70, 183);
             label13.Name = "label13";
-            label13.Size = new Size(246, 45);
+            label13.Size = new Size(316, 45);
             label13.TabIndex = 5;
-            label13.Text = "If you want to create/add more entries to the \r\nfilter, got to \"Hosts Editor\" section.\r\n\r\n";
+            label13.Text = "NOTE: Selecting a stricter rule will affect your performance.\r\n\r\n\r\n";
+            label13.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label12
             // 
             label12.AutoSize = true;
             label12.ForeColor = Color.FromArgb(192, 0, 0);
             label12.ImageAlign = ContentAlignment.MiddleRight;
-            label12.Location = new Point(6, 94);
+            label12.Location = new Point(3, 135);
             label12.Name = "label12";
-            label12.Size = new Size(296, 15);
+            label12.Size = new Size(366, 30);
             label12.TabIndex = 3;
-            label12.Text = "Parents - Extra Strict + Porn, and all other harmful stuff";
+            label12.Text = "Parents - UnifiedHosts File + Fake News + Social + Gambling + Porn\r\n(Around 268.000 rules)\r\n";
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.ForeColor = Color.Blue;
-            label11.Location = new Point(6, 79);
+            label11.Location = new Point(3, 118);
             label11.Name = "label11";
-            label11.Size = new Size(279, 15);
+            label11.Size = new Size(342, 15);
             label11.TabIndex = 3;
-            label11.Text = "Extra Strict - Strict + Blocks Gambling + Crypto, etc.\r\n";
+            label11.Text = "Extra Strict - UnifiedHosts file + Fake News + Social + Gambling\r\n";
             label11.Click += label11_Click;
             // 
             // label10
             // 
             label10.AutoSize = true;
             label10.ForeColor = Color.Goldenrod;
-            label10.Location = new Point(6, 64);
+            label10.Location = new Point(3, 100);
             label10.Name = "label10";
-            label10.Size = new Size(230, 15);
+            label10.Size = new Size(245, 15);
             label10.TabIndex = 3;
-            label10.Text = "Strict - Moderate + Blocks Social links, etc.\r\n";
+            label10.Text = "Strict - UnifiedHosts file + Fake news + Social\r\n";
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.ForeColor = Color.Green;
-            label9.Location = new Point(6, 49);
+            label9.Location = new Point(4, 67);
             label9.Name = "label9";
-            label9.Size = new Size(268, 15);
+            label9.Size = new Size(382, 45);
             label9.TabIndex = 3;
-            label9.Text = "Moderate - Light Mode +Blocks Ads/Popup Links";
+            label9.Text = "Moderate - Uses Steven Black's UnifiedHosts file. (around 220.000 rules)\r\n(Blocks Ads + Malware links)\r\n\r\n";
             // 
             // label8
             // 
             label8.AutoSize = true;
             label8.ForeColor = Color.FromArgb(0, 192, 192);
-            label8.Location = new Point(6, 34);
+            label8.Location = new Point(5, 34);
             label8.Name = "label8";
-            label8.Size = new Size(252, 15);
+            label8.Size = new Size(309, 30);
             label8.TabIndex = 3;
-            label8.Text = "Light - Just blocks malware/phishing websites.";
+            label8.Text = "Light - Uses Dan Pollock's hosts file. (around 11.750 rules)\r\nOptimized for fast and best web experience\r\n";
+            label8.Click += label8_Click;
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.ForeColor = Color.Red;
-            label7.Location = new Point(6, 19);
+            label7.Location = new Point(5, 16);
             label7.Name = "label7";
-            label7.Size = new Size(157, 15);
+            label7.Size = new Size(269, 15);
             label7.TabIndex = 3;
-            label7.Text = "OFF - No Filters will be used.";
+            label7.Text = "OFF - No Filters will be used. (Not recommended)";
             // 
             // groupBox4
             // 
@@ -757,8 +756,6 @@
             // 
             // tabPage5
             // 
-            tabPage5.Controls.Add(label24);
-            tabPage5.Controls.Add(label23);
             tabPage5.Location = new Point(4, 24);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new Padding(3);
@@ -766,25 +763,6 @@
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Saved Configurations";
             tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // label24
-            // 
-            label24.AutoSize = true;
-            label24.Location = new Point(103, 167);
-            label24.Name = "label24";
-            label24.Size = new Size(262, 30);
-            label24.TabIndex = 1;
-            label24.Text = "As a temporary solution, you can write your \r\nconfigurations, urls, etc. in a txt file and reuse it. ";
-            // 
-            // label23
-            // 
-            label23.AutoSize = true;
-            label23.Font = new Font("Courier New", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            label23.Location = new Point(12, 128);
-            label23.Name = "label23";
-            label23.Size = new Size(441, 25);
-            label23.TabIndex = 0;
-            label23.Text = "Will be added on v0.1.1, sorry :/";
             // 
             // groupBox2
             // 
@@ -940,8 +918,6 @@
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
-            tabPage5.ResumeLayout(false);
-            tabPage5.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
@@ -1016,8 +992,6 @@
         private Button button10;
         private Button savefasturl;
         private TabPage tabPage5;
-        private Label label24;
-        private Label label23;
         private ToolStripMenuItem gToolStripMenuItem;
         private ToolStripMenuItem fAQToolStripMenuItem;
         private ToolStripMenuItem documentationToolStripMenuItem;
