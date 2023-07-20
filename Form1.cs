@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using static NetPurifier.Form1;
+using System.Net;
 
 namespace NetPurifier;
 
@@ -169,35 +170,7 @@ public partial class Form1 : Form
         }
     }
 
-    private async Task DownloadFileFromGitHub(string fileName)
-    {
-        string githubRawFileUrl = $"https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/{fileName}";
-        string localFilePath = Path.Combine("filter-files", fileName);
-
-        using (HttpClient client = new HttpClient())
-        {
-            try
-            {
-                // Download the file from GitHub
-                HttpResponseMessage response = await client.GetAsync(githubRawFileUrl);
-                response.EnsureSuccessStatusCode();
-                byte[] fileBytes = await response.Content.ReadAsByteArrayAsync();
-
-                // Save the file locally in the 'filter-files' folder
-                File.WriteAllBytes(localFilePath, fileBytes);
-
-                richTextBox1.AppendText($"File '{fileName}' updated successfully.");
-            }
-            catch (HttpRequestException ex)
-            {
-                richTextBox1.AppendText($"Error downloading file '{fileName}': {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                richTextBox1.AppendText($"An error occurred: {ex.Message}");
-            }
-        }
-    }
+   
     public class ConfigEntry
     {
         [JsonIgnore]
@@ -801,32 +774,102 @@ public partial class Form1 : Form
 
     }
 
+    private long totalBytesDownloaded = 0;
+
     private async void button1_Click(object sender, EventArgs e)
     {
-        string message = "Update process for lists has been started";
-        string title = "Notification";
-        MessageBoxButtons buttons = MessageBoxButtons.OK;
-        DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Information);
-
-        // Start the download process for each file and update the ToolStripProgressBar
+        // Reset the progress bar and status label
         toolStripProgressBar1.Value = 0;
-        await DownloadFileAndUpdateProgressBar("light.bin");
-        await DownloadFileAndUpdateProgressBar("moderate.bin");
-        await DownloadFileAndUpdateProgressBar("strict.bin");
-        await DownloadFileAndUpdateProgressBar("extrastrict.bin");
-        await DownloadFileAndUpdateProgressBar("parents.bin");
-    }
-    private async Task DownloadFileAndUpdateProgressBar(string fileName)
-    {
-        // Your code to download the file goes here
-        // For example:
-        // await DownloadFileFromGitHub(fileName);
+        toolStripProgressBar1.Maximum = 5 * 100; // Assuming you are downloading 5 files
+        toolStripStatusLabel1.Text = "Downloading...";
 
-        // Update the ToolStripProgressBar
-        toolStripProgressBar1.Value++;
-        toolStripStatusLabel1.Text = $"Downloading {fileName}..."; // Optional: Update a status label
-        await Task.Delay(1000); // Optional: Simulate some delay to demonstrate the progress
+        // Create the 'lists' directory if it doesn't exist
+        string listsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "filter-files");
+        Directory.CreateDirectory(listsDirectory);
+
+        // Start downloading the files
+        await DownloadFileAndUpdateProgressBar("light.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/light.bin");
+        await DownloadFileAndUpdateProgressBar("moderate.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/moderate.bin");
+        await DownloadFileAndUpdateProgressBar("strict.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/strict.bin");
+        await DownloadFileAndUpdateProgressBar("extrastrict.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/extrastrict.bin");
+        await DownloadFileAndUpdateProgressBar("parents.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/parents.bin");
+
+        toolStripStatusLabel1.Text = "Download completed.";
     }
+
+    private async Task DownloadFileAndUpdateProgressBar(string fileName, string url)
+    {
+        using (var webClient = new WebClient())
+        {
+            string downloadPath = Path.Combine("filter-files", fileName);
+
+            // Initialize the total bytes to receive
+            long totalBytesToReceive = 0;
+
+            // Download progress event handler
+            webClient.DownloadProgressChanged += (sender, e) =>
+            {
+                // Update the ToolStripProgressBar with the progress
+                toolStripProgressBar1.Value = e.ProgressPercentage;
+                toolStripStatusLabel1.Text = $"Downloading {fileName}... ({FormatBytes(e.BytesReceived)}/{FormatBytes(totalBytesToReceive)})";
+            };
+
+            // Download completed event handler
+            webClient.DownloadFileCompleted += (sender, e) =>
+            {
+                if (!e.Cancelled && e.Error == null)
+                {
+                    // Update the total downloaded bytes
+                    totalBytesDownloaded += totalBytesToReceive;
+
+                    // Update the status label with the actual file size
+                    long fileSize = new FileInfo(downloadPath).Length;
+                    toolStripStatusLabel1.Text = $"Downloaded {fileName} ({FormatBytes(fileSize)})";
+
+                    // Update the ToolStripProgressBar value
+                    toolStripProgressBar1.Value++;
+                }
+                else
+                {
+                    // Handle download error or cancellation
+                    toolStripStatusLabel1.Text = $"Error downloading {fileName}";
+                }
+            };
+
+            // Get the content length of the file
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await httpClient.GetAsync(url);
+                    response.EnsureSuccessStatusCode();
+                    totalBytesToReceive = response.Content.Headers.ContentLength ?? 0;
+                }
+                catch (HttpRequestException ex)
+                {
+                    toolStripStatusLabel1.Text = $"Error getting content length for {fileName}: {ex.Message}";
+                    return;
+                }
+            }
+
+            // Start the asynchronous download
+            await webClient.DownloadFileTaskAsync(new Uri(url), downloadPath);
+        }
+    }
+
+    private string FormatBytes(long bytes)
+    {
+        string[] suffixes = { "B", "KB", "MB", "GB", "TB" };
+        int i;
+        double dblSByte = bytes;
+        for (i = 0; i < suffixes.Length && bytes >= 1024; i++, bytes /= 1024)
+        {
+            dblSByte = bytes / 1024.0;
+        }
+
+        return $"{dblSByte:0.##} {suffixes[i]}";
+    }
+
 
     private void gToolStripMenuItem_Click(object sender, EventArgs e)
     {
