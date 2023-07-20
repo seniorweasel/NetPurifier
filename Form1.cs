@@ -8,6 +8,9 @@ using System.Text;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Windows.Forms;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using static NetPurifier.Form1;
 
 namespace NetPurifier;
 
@@ -18,16 +21,22 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
+        listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
+        toolStripProgressBar1.Minimum = 0;
+        toolStripProgressBar1.Maximum = 5;
+        toolStripProgressBar1.Value = 0;
     }
 
     private void Form1_Load(object sender, EventArgs e)
     {
-
+        LoadHostnameToListBox();
+        LoadConfigValues();
         TextReader textomanic = new StreamReader(@"C:\Windows\System32\drivers\etc\hosts");
         richTextBox2.Text = textomanic.ReadToEnd();
         textomanic.Close();
 
     }
+    private ConfigWrapper configWrapper;
 
     private void Form1_FormClosing(object sender, FormClosingEventArgs e)
     {
@@ -43,9 +52,126 @@ public partial class Form1 : Form
         }
 
     }
+
+    private void LoadHostnameToListBox()
+    {
+        string configPath = Path.Combine("config", "userConnectionConf.json");
+
+        if (File.Exists(configPath))
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(configPath);
+
+                // Deserialize the JSON data into a wrapper object containing the entries property
+                configWrapper = JsonSerializer.Deserialize<ConfigWrapper>(jsonString);
+
+                // Check if the wrapper object and the entries list are not null
+                if (configWrapper != null && configWrapper.entries != null && configWrapper.entries.Count > 0)
+                {
+                    // Clear the existing items in listBox1
+                    listBox1.Items.Clear();
+
+                    foreach (ConfigEntry entry in configWrapper.entries)
+                    {
+                        // Add each hostname to listBox1
+                        listBox1.Items.Add(entry.hostname);
+                    }
+                }
+                else
+                {
+                    richTextBox1.AppendText("No config entries found.\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception, e.g., log the error or show a message to the user
+                richTextBox1.AppendText($"Error loading hostnames: {ex.Message}\n");
+            }
+        }
+        else
+        {
+            richTextBox1.AppendText("Config file not found.\n");
+        }
+    }
+
+    private void LoadConfigFromFile()
+    {
+        string configPath = Path.Combine("config", "userConnectionConf.json");
+
+        if (File.Exists(configPath))
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(configPath);
+
+                // Deserialize the JSON data into a wrapper object containing the entries property
+                ConfigWrapper configWrapper = JsonSerializer.Deserialize<ConfigWrapper>(jsonString);
+
+                // Check if the wrapper object and the entries list are not null
+                if (configWrapper != null && configWrapper.entries != null && configWrapper.entries.Count > 0)
+                {
+                    // Clear the existing items in configEntries list
+                    configEntries.Clear();
+
+                    // Add each entry to configEntries list
+                    configEntries.AddRange(configWrapper.entries);
+                }
+                else
+                {
+                    richTextBox1.AppendText("No config entries found.\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception, e.g., log the error or show a message to the user
+                richTextBox1.AppendText($"Error loading config entries: {ex.Message}\n");
+            }
+        }
+        else
+        {
+            richTextBox1.AppendText("Config file not found.\n");
+        }
+    }
+
+
+
+    // Helper class to represent the JSON wrapper with "entries" property
+    public class ConfigWrapper
+    {
+        public List<ConfigEntry> entries { get; set; }
+    }
+
+    // List to hold the ConfigEntry objects
+    private List<ConfigEntry> configEntries = new List<ConfigEntry>();
+    private string configPath = "config/userConnectionConf.json"; // Update this path accordingly
+
+    // Method to save the configuration entries to the JSON file
+    private void SaveConfigToFile()
+    {
+        string configPath = Path.Combine("config", "userConnectionConf.json");
+
+        try
+        {
+            // Create a wrapper object containing the entries list
+            ConfigWrapper configWrapper = new ConfigWrapper { entries = configEntries };
+
+            // Serialize the wrapper object to JSON
+            string jsonString = JsonSerializer.Serialize(configWrapper, new JsonSerializerOptions { WriteIndented = true });
+
+            // Write the JSON data to the file
+            File.WriteAllText(configPath, jsonString);
+        }
+        catch (Exception ex)
+        {
+            // Handle the exception, e.g., log the error or show a message to the user
+            richTextBox1.AppendText($"Error saving config file: {ex.Message}\n");
+        }
+    }
+
     private async Task DownloadFileFromGitHub(string fileName)
     {
-        string githubRawFileUrl = $"https://raw.githubusercontent.com/seniorweasel/netpurifier-filter/main/{fileName}";
+        string githubRawFileUrl = $"https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/{fileName}";
         string localFilePath = Path.Combine("filter-files", fileName);
 
         using (HttpClient client = new HttpClient())
@@ -72,6 +198,68 @@ public partial class Form1 : Form
             }
         }
     }
+    public class ConfigEntry
+    {
+        [JsonIgnore]
+        public int ClientportNum { get; set; }
+        public string protocoloption { get; set; }
+        public string hostname { get; set; }
+        public int serverpot { get; set; }
+        public string encryptionManage { get; set; }
+        public string password { get; set; }
+        public string plugin { get; set; }
+        public string plugopts { get; set; }
+        public string shadowUrl { get; set; }
+    }
+
+    private void LoadConfigValues()
+    {
+        string configPath = Path.Combine("config", "userConnectionConf.json");
+
+        if (File.Exists(configPath) && listBox1.SelectedItem != null)
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(configPath);
+                List<ConfigEntry> configEntries = JsonSerializer.Deserialize<List<ConfigEntry>>(jsonString);
+
+                string selectedHostname = listBox1.SelectedItem.ToString();
+                ConfigEntry selectedEntry = configEntries.Find(entry => entry.hostname == selectedHostname);
+
+                if (selectedEntry != null)
+                {
+
+                    comboBox3.Text = selectedEntry.protocoloption;
+                    serveriporhost.Text = selectedEntry.hostname;
+                    serverport.Text = selectedEntry.serverpot.ToString();
+                    comboBox1.Text = selectedEntry.encryptionManage;
+                    serverpassword.Text = selectedEntry.password;
+                    pluginprogram.Text = selectedEntry.plugin;
+                    plugoptions.Text = selectedEntry.plugopts;
+                    shadowsocksurl.Text = selectedEntry.shadowUrl;
+                }
+                else
+                {
+                    richTextBox1.AppendText($"Config entry not found for hostname: {selectedHostname}. Creating a new entry...\n");
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception, e.g., log the error or show a message to the user
+                richTextBox1.AppendText($"Error loading/configuring values: {ex.Message}\n");
+            }
+        }
+        else
+        {
+            richTextBox1.AppendText("Config file not found\n");
+        }
+    }
+
+
+
+
     private void tabPage1_Click(object sender, EventArgs e)
     {
 
@@ -281,6 +469,7 @@ public partial class Form1 : Form
             {
                 Invoke(new Action(() => richTextBox1.AppendText("Fast Shadowsocks Connection (URL) Mode\n")));
                 startInfo.Arguments = $"/c cd ss && sslocal.exe --local-addr \"127.0.0.1:{ClientportNum}\" --protocol \"{protocoloption}\" --server-url \"{shadowUrl}\" ";
+                Invoke(new Action(() => richTextBox1.AppendText("Note: If you're trying to connect manually and it says invalid SIP002, please uncheck the \"Fast Shadowsocks Connection\" below.\n")));
 
             }
             else if (checkBox2.Checked == true && checkBox1.Checked == true)
@@ -503,14 +692,14 @@ public partial class Form1 : Form
         {
 
             shadowsocksurl.Enabled = false;
-            savefasturl.Enabled = false;
+
             fastconnect.Enabled = false;
 
         }
         else
         {
             shadowsocksurl.Enabled = true;
-            savefasturl.Enabled = true;
+
             fastconnect.Enabled = true;
         }
     }
@@ -590,13 +779,17 @@ public partial class Form1 : Form
             catch (UnauthorizedAccessException)
             {
                 string message = "Well, you need close your antivirus program, etc. and try again. Your antivirus program (probably) is blocking NetPurifier's actions.";
-                string title = "Oops, something is blocking NetPurifier's activities";
+                string title = "Oops, something went wrong!";
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
             }
         }
         else
         {
+            string message = "We could not find the filter files. Please click \"Update Files\" and try again!";
+            string title = "Oops, something went wrong!";
+            MessageBoxButtons buttons = MessageBoxButtons.OK;
+            DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
             return;
         }
 
@@ -610,11 +803,29 @@ public partial class Form1 : Form
 
     private async void button1_Click(object sender, EventArgs e)
     {
-        await DownloadFileFromGitHub("light.bin");
-        await DownloadFileFromGitHub("moderate.bin");
-        await DownloadFileFromGitHub("strict.bin");
-        await DownloadFileFromGitHub("extrastrict.bin");
-        await DownloadFileFromGitHub("parents.bin");
+        string message = "Update process for lists has been started";
+        string title = "Notification";
+        MessageBoxButtons buttons = MessageBoxButtons.OK;
+        DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Information);
+
+        // Start the download process for each file and update the ToolStripProgressBar
+        toolStripProgressBar1.Value = 0;
+        await DownloadFileAndUpdateProgressBar("light.bin");
+        await DownloadFileAndUpdateProgressBar("moderate.bin");
+        await DownloadFileAndUpdateProgressBar("strict.bin");
+        await DownloadFileAndUpdateProgressBar("extrastrict.bin");
+        await DownloadFileAndUpdateProgressBar("parents.bin");
+    }
+    private async Task DownloadFileAndUpdateProgressBar(string fileName)
+    {
+        // Your code to download the file goes here
+        // For example:
+        // await DownloadFileFromGitHub(fileName);
+
+        // Update the ToolStripProgressBar
+        toolStripProgressBar1.Value++;
+        toolStripStatusLabel1.Text = $"Downloading {fileName}..."; // Optional: Update a status label
+        await Task.Delay(1000); // Optional: Simulate some delay to demonstrate the progress
     }
 
     private void gToolStripMenuItem_Click(object sender, EventArgs e)
@@ -642,6 +853,145 @@ public partial class Form1 : Form
     {
 
     }
+
+    private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    private void saveConf_Click(object sender, EventArgs e)
+    {
+        // Create a new config entry
+        ConfigEntry newEntry = new ConfigEntry
+        {
+
+            protocoloption = comboBox3.Text,
+            hostname = serveriporhost.Text,
+            serverpot = int.Parse(serverport.Text),
+            encryptionManage = comboBox1.Text,
+            password = serverpassword.Text,
+            plugin = pluginprogram.Text,
+            plugopts = plugoptions.Text,
+            shadowUrl = shadowsocksurl.Text
+        };
+
+        // Load existing entries from the JSON file into the configEntries list
+        LoadConfigFromFile();
+
+        // Add the new entry to the list
+        configEntries.Add(newEntry);
+
+        // Save all configuration entries to JSON file
+        SaveConfigToFile();
+
+        // Reload the hostnames in listBox1
+        LoadHostnameToListBox();
+
+        richTextBox1.AppendText("New config entry created and saved.\n");
+    }
+
+    private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        // Get the selected item from the listBox1
+        string selectedHostname = listBox1.SelectedItem?.ToString();
+
+        // Find the corresponding entry in the config file
+        ConfigEntry selectedEntry = configWrapper.entries.FirstOrDefault(entry => entry.hostname == selectedHostname);
+
+        // Update the textboxes with the values from the selected entry
+        if (selectedEntry != null)
+        {
+
+            comboBox3.Text = selectedEntry.protocoloption;
+            serveriporhost.Text = selectedEntry.hostname;
+            serverport.Text = selectedEntry.serverpot.ToString();
+            comboBox1.Text = selectedEntry.encryptionManage;
+            serverpassword.Text = selectedEntry.password;
+            pluginprogram.Text = selectedEntry.plugin;
+            plugoptions.Text = selectedEntry.plugopts;
+            shadowsocksurl.Text = selectedEntry.shadowUrl;
+        }
+    }
+
+    private void DeleteConfigurationButton_Click(object sender, EventArgs e)
+    {
+        if (listBox1.SelectedItem != null)
+        {
+            // Load existing entries from the JSON file into the configEntries list
+            LoadConfigFromFile();
+
+            // Get the selected hostname from listBox1
+            string selectedHostname = listBox1.SelectedItem.ToString();
+
+            // Find the configuration entry to delete
+            ConfigEntry entryToDelete = configEntries.Find(entry => entry.hostname == selectedHostname);
+
+            if (entryToDelete != null)
+            {
+                // Remove the entry from the list
+                configEntries.Remove(entryToDelete);
+
+                // Save the updated configuration entries to JSON file
+                SaveConfigToFile();
+
+                // Reload the hostnames in listBox1
+                LoadHostnameToListBox();
+
+                richTextBox1.AppendText($"Configuration for hostname '{selectedHostname}' deleted.\n");
+            }
+            else
+            {
+                richTextBox1.AppendText($"Configuration for hostname '{selectedHostname}' not found.\n");
+            }
+        }
+        else
+        {
+            richTextBox1.AppendText("Please select a configuration to delete.\n");
+        }
+    }
+
+    private void button4_Click(object sender, EventArgs e)
+    {
+        // Check if the hostname is empty, if so, set it to "A saved URL"
+        if (string.IsNullOrWhiteSpace(serveriporhost.Text))
+        {
+            serveriporhost.Text = "A saved URL";
+        }
+
+        // Create a new config entry
+        ConfigEntry newEntry = new ConfigEntry
+        {
+            protocoloption = comboBox3.Text,
+            hostname = serveriporhost.Text,
+            serverpot = 0,
+            encryptionManage = comboBox1.Text,
+            password = serverpassword.Text,
+            plugin = pluginprogram.Text,
+            plugopts = plugoptions.Text,
+            shadowUrl = shadowsocksurl.Text
+        };
+
+        // Load existing entries from the JSON file into the configEntries list
+        LoadConfigFromFile();
+
+        // Add the new entry to the list
+        configEntries.Add(newEntry);
+
+        // Save all configuration entries to JSON file
+        SaveConfigToFile();
+
+        // Reload the hostnames in listBox1
+        LoadHostnameToListBox();
+
+        richTextBox1.AppendText("New config entry created and saved.\n");
+
+        string message = "URL Saved. You can see it in \"Saved Proxies & Settings\" tab. \n Default protocol for shadowsocks URLs are http. Change it and save the url again if its a different thing.  ";
+        string title = "URL Saved";
+        MessageBoxButtons buttons = MessageBoxButtons.OK;
+        DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
+
+
+    }
 }
 // Dictionary to map trackbar values to filenames
 
@@ -655,5 +1005,4 @@ class WinINetInterop
     [DllImport("wininet.dll", SetLastError = true, CharSet = CharSet.Auto)]
     public static extern bool InternetSetOption(IntPtr hInternet, int dwOption, IntPtr lpBuffer, int dwBufferLength);
 }
-
 

@@ -37,14 +37,17 @@
             premiumToolStripMenuItem = new ToolStripMenuItem();
             fileToolStripMenuItem = new ToolStripMenuItem();
             preferencesToolStripMenuItem = new ToolStripMenuItem();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
+            gToolStripMenuItem = new ToolStripMenuItem();
             guideToolStripMenuItem = new ToolStripMenuItem();
             fAQToolStripMenuItem = new ToolStripMenuItem();
             documentationToolStripMenuItem = new ToolStripMenuItem();
             knownProblemsToolStripMenuItem = new ToolStripMenuItem();
             basicUserManualToolStripMenuItem = new ToolStripMenuItem();
-            aboutToolStripMenuItem = new ToolStripMenuItem();
-            gToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
+            toolStripStatusLabel1 = new ToolStripStatusLabel();
+            toolStripStatusLabel2 = new ToolStripStatusLabel();
+            toolStripProgressBar1 = new ToolStripProgressBar();
             groupBox1 = new GroupBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
@@ -55,17 +58,16 @@
             button5 = new Button();
             richTextBox2 = new RichTextBox();
             tabPage3 = new TabPage();
-            groupBox8 = new GroupBox();
-            label20 = new Label();
+            groupBox7 = new GroupBox();
+            DeleteConfigurationButton = new Button();
+            saveConf = new Button();
+            checkBox1 = new CheckBox();
             label22 = new Label();
             plugoptions = new TextBox();
-            checkBox1 = new CheckBox();
-            label18 = new Label();
-            pluginprogram = new TextBox();
-            groupBox7 = new GroupBox();
-            button10 = new Button();
             comboBox3 = new ComboBox();
+            label18 = new Label();
             label21 = new Label();
+            pluginprogram = new TextBox();
             serverport = new TextBox();
             comboBox1 = new ComboBox();
             label19 = new Label();
@@ -74,9 +76,8 @@
             label16 = new Label();
             label15 = new Label();
             serveriporhost = new TextBox();
-            groupBox6 = new GroupBox();
-            textBox6 = new TextBox();
-            label14 = new Label();
+            groupBox9 = new GroupBox();
+            listBox1 = new ListBox();
             tabPage4 = new TabPage();
             groupBox5 = new GroupBox();
             label13 = new Label();
@@ -94,27 +95,28 @@
             label2 = new Label();
             label1 = new Label();
             trackBar1 = new TrackBar();
-            tabPage5 = new TabPage();
+            textBox6 = new TextBox();
+            label14 = new Label();
             groupBox2 = new GroupBox();
+            label20 = new Label();
             button8 = new Button();
             button3 = new Button();
             button2 = new Button();
             button1 = new Button();
             groupBox3 = new GroupBox();
-            savefasturl = new Button();
+            saveurlfast = new Button();
             checkBox2 = new CheckBox();
             fastconnect = new Button();
             shadowsocksurl = new TextBox();
-            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             menuStrip1.SuspendLayout();
+            statusStrip1.SuspendLayout();
             groupBox1.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
             tabPage3.SuspendLayout();
-            groupBox8.SuspendLayout();
             groupBox7.SuspendLayout();
-            groupBox6.SuspendLayout();
+            groupBox9.SuspendLayout();
             tabPage4.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -126,7 +128,7 @@
             // menuStrip1
             // 
             menuStrip1.BackColor = SystemColors.ControlLightLight;
-            menuStrip1.Items.AddRange(new ToolStripItem[] { getShadowsocksURLToolStripMenuItem, fileToolStripMenuItem, preferencesToolStripMenuItem, guideToolStripMenuItem, aboutToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { getShadowsocksURLToolStripMenuItem, fileToolStripMenuItem, preferencesToolStripMenuItem, aboutToolStripMenuItem, guideToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(635, 24);
@@ -180,6 +182,20 @@
             preferencesToolStripMenuItem.Size = new Size(80, 20);
             preferencesToolStripMenuItem.Text = "Preferences";
             // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gToolStripMenuItem });
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(52, 20);
+            aboutToolStripMenuItem.Text = "About";
+            // 
+            // gToolStripMenuItem
+            // 
+            gToolStripMenuItem.Name = "gToolStripMenuItem";
+            gToolStripMenuItem.Size = new Size(167, 22);
+            gToolStripMenuItem.Text = "About NetPurifier";
+            gToolStripMenuItem.Click += gToolStripMenuItem_Click;
+            // 
             // guideToolStripMenuItem
             // 
             guideToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fAQToolStripMenuItem, documentationToolStripMenuItem, knownProblemsToolStripMenuItem, basicUserManualToolStripMenuItem });
@@ -211,28 +227,31 @@
             basicUserManualToolStripMenuItem.Size = new Size(252, 22);
             basicUserManualToolStripMenuItem.Text = "Basic User Manual for home users";
             // 
-            // aboutToolStripMenuItem
-            // 
-            aboutToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gToolStripMenuItem });
-            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(52, 20);
-            aboutToolStripMenuItem.Text = "About";
-            // 
-            // gToolStripMenuItem
-            // 
-            gToolStripMenuItem.Name = "gToolStripMenuItem";
-            gToolStripMenuItem.Size = new Size(167, 22);
-            gToolStripMenuItem.Text = "About NetPurifier";
-            gToolStripMenuItem.Click += gToolStripMenuItem_Click;
-            // 
             // statusStrip1
             // 
             statusStrip1.BackColor = SystemColors.ControlLightLight;
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2, toolStripProgressBar1 });
             statusStrip1.Location = new Point(0, 436);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(635, 22);
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new Size(0, 17);
+            // 
+            // toolStripStatusLabel2
+            // 
+            toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            toolStripStatusLabel2.Size = new Size(0, 17);
+            // 
+            // toolStripProgressBar1
+            // 
+            toolStripProgressBar1.Name = "toolStripProgressBar1";
+            toolStripProgressBar1.Size = new Size(100, 16);
+            toolStripProgressBar1.Step = 5;
             // 
             // groupBox1
             // 
@@ -250,7 +269,6 @@
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
             tabControl1.Controls.Add(tabPage4);
-            tabControl1.Controls.Add(tabPage5);
             tabControl1.Location = new Point(6, 22);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -260,12 +278,13 @@
             // tabPage1
             // 
             tabPage1.Controls.Add(richTextBox1);
+            tabPage1.ForeColor = SystemColors.ControlText;
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
             tabPage1.Size = new Size(465, 282);
             tabPage1.TabIndex = 0;
-            tabPage1.Text = "Connection Logs";
+            tabPage1.Text = "Session Log";
             tabPage1.UseVisualStyleBackColor = true;
             tabPage1.Click += tabPage1_Click;
             // 
@@ -273,9 +292,9 @@
             // 
             richTextBox1.BackColor = Color.Black;
             richTextBox1.ForeColor = Color.Lime;
-            richTextBox1.Location = new Point(0, 3);
+            richTextBox1.Location = new Point(0, 0);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(465, 279);
+            richTextBox1.Size = new Size(465, 282);
             richTextBox1.TabIndex = 0;
             richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
@@ -333,94 +352,27 @@
             // 
             // tabPage3
             // 
-            tabPage3.Controls.Add(groupBox8);
             tabPage3.Controls.Add(groupBox7);
-            tabPage3.Controls.Add(groupBox6);
+            tabPage3.Controls.Add(groupBox9);
             tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(3);
             tabPage3.Size = new Size(465, 282);
             tabPage3.TabIndex = 2;
-            tabPage3.Text = "Proxy Settings";
+            tabPage3.Text = "Saved Proxies & Settings";
             tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // groupBox8
-            // 
-            groupBox8.Controls.Add(label20);
-            groupBox8.Controls.Add(label22);
-            groupBox8.Controls.Add(plugoptions);
-            groupBox8.Controls.Add(checkBox1);
-            groupBox8.Controls.Add(label18);
-            groupBox8.Controls.Add(pluginprogram);
-            groupBox8.Location = new Point(235, 67);
-            groupBox8.Name = "groupBox8";
-            groupBox8.Size = new Size(224, 209);
-            groupBox8.TabIndex = 5;
-            groupBox8.TabStop = false;
-            groupBox8.Text = "Plugin Settings";
-            // 
-            // label20
-            // 
-            label20.AutoSize = true;
-            label20.ForeColor = Color.FromArgb(0, 192, 192);
-            label20.Location = new Point(9, 181);
-            label20.Name = "label20";
-            label20.Size = new Size(203, 15);
-            label20.TabIndex = 14;
-            label20.Text = "Read \"Guides\" for more information. ";
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Location = new Point(6, 69);
-            label22.Name = "label22";
-            label22.Size = new Size(89, 15);
-            label22.TabIndex = 11;
-            label22.Text = "Plugin Options:";
-            // 
-            // plugoptions
-            // 
-            plugoptions.Enabled = false;
-            plugoptions.Location = new Point(103, 66);
-            plugoptions.Name = "plugoptions";
-            plugoptions.Size = new Size(114, 23);
-            plugoptions.TabIndex = 10;
-            // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(9, 18);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(151, 19);
-            checkBox1.TabIndex = 5;
-            checkBox1.Text = "Activate Plugin Support";
-            checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
-            // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Location = new Point(6, 41);
-            label18.Name = "label18";
-            label18.Size = new Size(93, 15);
-            label18.TabIndex = 9;
-            label18.Text = "Plugin Program:";
-            // 
-            // pluginprogram
-            // 
-            pluginprogram.Enabled = false;
-            pluginprogram.Location = new Point(103, 38);
-            pluginprogram.Name = "pluginprogram";
-            pluginprogram.PlaceholderText = "e.g. v2ray-plugin";
-            pluginprogram.Size = new Size(114, 23);
-            pluginprogram.TabIndex = 7;
-            pluginprogram.TextChanged += pluginprogram_TextChanged;
             // 
             // groupBox7
             // 
-            groupBox7.Controls.Add(button10);
+            groupBox7.Controls.Add(DeleteConfigurationButton);
+            groupBox7.Controls.Add(saveConf);
+            groupBox7.Controls.Add(checkBox1);
+            groupBox7.Controls.Add(label22);
+            groupBox7.Controls.Add(plugoptions);
             groupBox7.Controls.Add(comboBox3);
+            groupBox7.Controls.Add(label18);
             groupBox7.Controls.Add(label21);
+            groupBox7.Controls.Add(pluginprogram);
             groupBox7.Controls.Add(serverport);
             groupBox7.Controls.Add(comboBox1);
             groupBox7.Controls.Add(label19);
@@ -429,46 +381,107 @@
             groupBox7.Controls.Add(label16);
             groupBox7.Controls.Add(label15);
             groupBox7.Controls.Add(serveriporhost);
-            groupBox7.Location = new Point(6, 67);
+            groupBox7.Location = new Point(170, 6);
             groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(223, 209);
+            groupBox7.Size = new Size(289, 270);
             groupBox7.TabIndex = 4;
             groupBox7.TabStop = false;
             groupBox7.Text = "Shaowsocks Server Settings";
             // 
-            // button10
+            // DeleteConfigurationButton
             // 
-            button10.Location = new Point(6, 161);
-            button10.Name = "button10";
-            button10.Size = new Size(206, 23);
-            button10.TabIndex = 15;
-            button10.Text = "Save Configuration";
-            button10.UseVisualStyleBackColor = true;
+            DeleteConfigurationButton.ForeColor = Color.Maroon;
+            DeleteConfigurationButton.Location = new Point(7, 241);
+            DeleteConfigurationButton.Name = "DeleteConfigurationButton";
+            DeleteConfigurationButton.Size = new Size(129, 23);
+            DeleteConfigurationButton.TabIndex = 16;
+            DeleteConfigurationButton.Text = "🗑 Delete Config.";
+            DeleteConfigurationButton.UseVisualStyleBackColor = true;
+            DeleteConfigurationButton.Click += DeleteConfigurationButton_Click;
+            // 
+            // saveConf
+            // 
+            saveConf.ForeColor = Color.Teal;
+            saveConf.Location = new Point(142, 241);
+            saveConf.Name = "saveConf";
+            saveConf.Size = new Size(141, 23);
+            saveConf.TabIndex = 15;
+            saveConf.Text = "💾 Save Config.";
+            saveConf.UseVisualStyleBackColor = true;
+            saveConf.Click += saveConf_Click;
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(104, 161);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(151, 19);
+            checkBox1.TabIndex = 5;
+            checkBox1.Text = "Activate Plugin Support";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new Point(6, 216);
+            label22.Name = "label22";
+            label22.Size = new Size(89, 15);
+            label22.TabIndex = 11;
+            label22.Text = "Plugin Options:";
+            // 
+            // plugoptions
+            // 
+            plugoptions.Enabled = false;
+            plugoptions.Location = new Point(101, 212);
+            plugoptions.Name = "plugoptions";
+            plugoptions.Size = new Size(182, 23);
+            plugoptions.TabIndex = 10;
             // 
             // comboBox3
             // 
             comboBox3.FormattingEnabled = true;
             comboBox3.Items.AddRange(new object[] { "socks5", "http (TCP/UDP)", "tunnel" });
-            comboBox3.Location = new Point(91, 132);
+            comboBox3.Location = new Point(101, 132);
             comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(121, 23);
+            comboBox3.Size = new Size(182, 23);
             comboBox3.TabIndex = 14;
+            comboBox3.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(6, 188);
+            label18.Name = "label18";
+            label18.Size = new Size(93, 15);
+            label18.TabIndex = 9;
+            label18.Text = "Plugin Program:";
             // 
             // label21
             // 
             label21.AutoSize = true;
-            label21.Location = new Point(6, 135);
+            label21.Location = new Point(7, 136);
             label21.Name = "label21";
             label21.Size = new Size(55, 15);
             label21.TabIndex = 13;
             label21.Text = "Protocol:";
             // 
+            // pluginprogram
+            // 
+            pluginprogram.Enabled = false;
+            pluginprogram.Location = new Point(101, 184);
+            pluginprogram.Name = "pluginprogram";
+            pluginprogram.PlaceholderText = "e.g. v2ray-plugin";
+            pluginprogram.Size = new Size(182, 23);
+            pluginprogram.TabIndex = 7;
+            pluginprogram.TextChanged += pluginprogram_TextChanged;
+            // 
             // serverport
             // 
-            serverport.Location = new Point(91, 46);
+            serverport.Location = new Point(101, 46);
             serverport.Name = "serverport";
             serverport.PlaceholderText = "e.g. 1080, etc.";
-            serverport.Size = new Size(121, 23);
+            serverport.Size = new Size(182, 23);
             serverport.TabIndex = 12;
             serverport.TextChanged += serverport_TextChanged;
             // 
@@ -476,16 +489,16 @@
             // 
             comboBox1.FormattingEnabled = true;
             comboBox1.Items.AddRange(new object[] { "none", "plain", "aes-256-gcm", "aes-192-gcm", "aes-128-gcm", "chacha20-ietf-poly1305", "xhacha20-ietf-poly1305" });
-            comboBox1.Location = new Point(91, 103);
+            comboBox1.Location = new Point(101, 103);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
+            comboBox1.Size = new Size(182, 23);
             comboBox1.TabIndex = 11;
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // label19
             // 
             label19.AutoSize = true;
-            label19.Location = new Point(6, 106);
+            label19.Location = new Point(7, 107);
             label19.Name = "label19";
             label19.Size = new Size(67, 15);
             label19.TabIndex = 10;
@@ -494,7 +507,7 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new Point(6, 79);
+            label17.Location = new Point(7, 80);
             label17.Name = "label17";
             label17.Size = new Size(60, 15);
             label17.TabIndex = 8;
@@ -502,16 +515,16 @@
             // 
             // serverpassword
             // 
-            serverpassword.Location = new Point(92, 74);
+            serverpassword.Location = new Point(102, 74);
             serverpassword.Name = "serverpassword";
-            serverpassword.Size = new Size(120, 23);
+            serverpassword.Size = new Size(181, 23);
             serverpassword.TabIndex = 6;
             serverpassword.TextChanged += serverpassword_TextChanged;
             // 
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new Point(6, 49);
+            label16.Location = new Point(7, 50);
             label16.Name = "label16";
             label16.Size = new Size(67, 15);
             label16.TabIndex = 5;
@@ -520,7 +533,7 @@
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(6, 19);
+            label15.Location = new Point(7, 20);
             label15.Name = "label15";
             label15.Size = new Size(85, 15);
             label15.TabIndex = 3;
@@ -528,41 +541,32 @@
             // 
             // serveriporhost
             // 
-            serveriporhost.Location = new Point(92, 16);
+            serveriporhost.Location = new Point(102, 16);
             serveriporhost.Name = "serveriporhost";
             serveriporhost.PlaceholderText = "abc.example.com";
-            serveriporhost.Size = new Size(120, 23);
+            serveriporhost.Size = new Size(181, 23);
             serveriporhost.TabIndex = 2;
             serveriporhost.TextChanged += serveriporhost_TextChanged;
             // 
-            // groupBox6
+            // groupBox9
             // 
-            groupBox6.Controls.Add(textBox6);
-            groupBox6.Controls.Add(label14);
-            groupBox6.Location = new Point(6, 6);
-            groupBox6.Name = "groupBox6";
-            groupBox6.Size = new Size(453, 55);
-            groupBox6.TabIndex = 0;
-            groupBox6.TabStop = false;
-            groupBox6.Text = "Shadowsocks Client Settings";
+            groupBox9.Controls.Add(listBox1);
+            groupBox9.Location = new Point(6, 6);
+            groupBox9.Name = "groupBox9";
+            groupBox9.Size = new Size(158, 270);
+            groupBox9.TabIndex = 1;
+            groupBox9.TabStop = false;
+            groupBox9.Text = "Saved Configurations List";
             // 
-            // textBox6
+            // listBox1
             // 
-            textBox6.Location = new Point(153, 21);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(70, 23);
-            textBox6.TabIndex = 13;
-            textBox6.Text = "1080";
-            textBox6.TextChanged += textBox6_TextChanged;
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Location = new Point(6, 24);
-            label14.Name = "label14";
-            label14.Size = new Size(141, 15);
-            label14.TabIndex = 1;
-            label14.Text = "Proxy Port (Default 1080):\r\n";
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 15;
+            listBox1.Location = new Point(4, 20);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(149, 244);
+            listBox1.TabIndex = 0;
+            listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
             // tabPage4
             // 
@@ -752,21 +756,32 @@
             trackBar1.Name = "trackBar1";
             trackBar1.Size = new Size(447, 45);
             trackBar1.TabIndex = 0;
-            trackBar1.Value = 2;
+            trackBar1.Value = 1;
             // 
-            // tabPage5
+            // textBox6
             // 
-            tabPage5.Location = new Point(4, 24);
-            tabPage5.Name = "tabPage5";
-            tabPage5.Padding = new Padding(3);
-            tabPage5.Size = new Size(465, 282);
-            tabPage5.TabIndex = 4;
-            tabPage5.Text = "Saved Configurations";
-            tabPage5.UseVisualStyleBackColor = true;
+            textBox6.Location = new Point(66, 72);
+            textBox6.Name = "textBox6";
+            textBox6.Size = new Size(48, 23);
+            textBox6.TabIndex = 13;
+            textBox6.Text = "1080";
+            textBox6.TextChanged += textBox6_TextChanged;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(6, 54);
+            label14.Name = "label14";
+            label14.Size = new Size(96, 15);
+            label14.TabIndex = 1;
+            label14.Text = "Local Proxy Port:\r\n";
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(label20);
+            groupBox2.Controls.Add(textBox6);
             groupBox2.Controls.Add(button8);
+            groupBox2.Controls.Add(label14);
             groupBox2.Controls.Add(button3);
             groupBox2.Controls.Add(button2);
             groupBox2.Controls.Add(button1);
@@ -776,6 +791,15 @@
             groupBox2.TabIndex = 4;
             groupBox2.TabStop = false;
             groupBox2.Text = "Controls";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Location = new Point(6, 76);
+            label20.Name = "label20";
+            label20.Size = new Size(55, 15);
+            label20.TabIndex = 14;
+            label20.Text = "127.0.0.1:\r\n";
             // 
             // button8
             // 
@@ -813,7 +837,7 @@
             // button1
             // 
             button1.ForeColor = Color.Teal;
-            button1.Location = new Point(6, 216);
+            button1.Location = new Point(6, 18);
             button1.Name = "button1";
             button1.Size = new Size(114, 27);
             button1.TabIndex = 0;
@@ -823,7 +847,7 @@
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(savefasturl);
+            groupBox3.Controls.Add(saveurlfast);
             groupBox3.Controls.Add(checkBox2);
             groupBox3.Controls.Add(fastconnect);
             groupBox3.Controls.Add(shadowsocksurl);
@@ -834,15 +858,16 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "Fast Shadowsocks Connection";
             // 
-            // savefasturl
+            // saveurlfast
             // 
-            savefasturl.ForeColor = Color.Teal;
-            savefasturl.Location = new Point(410, 28);
-            savefasturl.Name = "savefasturl";
-            savefasturl.Size = new Size(75, 23);
-            savefasturl.TabIndex = 3;
-            savefasturl.Text = "💾 Save ";
-            savefasturl.UseVisualStyleBackColor = true;
+            saveurlfast.ForeColor = Color.Teal;
+            saveurlfast.Location = new Point(391, 27);
+            saveurlfast.Name = "saveurlfast";
+            saveurlfast.Size = new Size(99, 23);
+            saveurlfast.TabIndex = 17;
+            saveurlfast.Text = "💾 Save URL!";
+            saveurlfast.UseVisualStyleBackColor = true;
+            saveurlfast.Click += button4_Click;
             // 
             // checkBox2
             // 
@@ -872,13 +897,9 @@
             shadowsocksurl.Location = new Point(31, 28);
             shadowsocksurl.Name = "shadowsocksurl";
             shadowsocksurl.PlaceholderText = "Paste your ss:// url here!";
-            shadowsocksurl.Size = new Size(374, 23);
+            shadowsocksurl.Size = new Size(354, 23);
             shadowsocksurl.TabIndex = 0;
             shadowsocksurl.TextChanged += shadowsocksurl_TextChanged;
-            // 
-            // backgroundWorker1
-            // 
-            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
             // 
             // Form1
             // 
@@ -901,17 +922,16 @@
             Load += Form1_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             groupBox1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);
             tabPage3.ResumeLayout(false);
-            groupBox8.ResumeLayout(false);
-            groupBox8.PerformLayout();
             groupBox7.ResumeLayout(false);
             groupBox7.PerformLayout();
-            groupBox6.ResumeLayout(false);
-            groupBox6.PerformLayout();
+            groupBox9.ResumeLayout(false);
             tabPage4.ResumeLayout(false);
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
@@ -919,6 +939,7 @@
             groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             ResumeLayout(false);
@@ -939,6 +960,22 @@
         private GroupBox groupBox3;
         private Button fastconnect;
         private TextBox shadowsocksurl;
+        private Label label14;
+        private TextBox textBox6;
+        private Button button8;
+        private CheckBox checkBox2;
+        private ToolStripMenuItem gToolStripMenuItem;
+        private ToolStripMenuItem fAQToolStripMenuItem;
+        private ToolStripMenuItem documentationToolStripMenuItem;
+        private ToolStripMenuItem knownProblemsToolStripMenuItem;
+        private ToolStripMenuItem basicUserManualToolStripMenuItem;
+        private ToolStripMenuItem fileToolStripMenuItem;
+        private ToolStripMenuItem preferencesToolStripMenuItem;
+        private ToolStripMenuItem getShadowsocksURLToolStripMenuItem;
+        private ToolStripMenuItem freeToolStripMenuItem;
+        private ToolStripMenuItem premiumToolStripMenuItem;
+        private ToolStripMenuItem sSHOceanToolStripMenuItem;
+        private ToolStripMenuItem iPRaceToolStripMenuItem;
         private TabControl tabControl1;
         private TabPage tabPage1;
         private RichTextBox richTextBox1;
@@ -948,6 +985,25 @@
         private Button button5;
         private RichTextBox richTextBox2;
         private TabPage tabPage3;
+        private GroupBox groupBox7;
+        private Button saveConf;
+        private CheckBox checkBox1;
+        private Label label22;
+        private TextBox plugoptions;
+        private ComboBox comboBox3;
+        private Label label18;
+        private Label label21;
+        private TextBox pluginprogram;
+        private TextBox serverport;
+        private ComboBox comboBox1;
+        private Label label19;
+        private Label label17;
+        private TextBox serverpassword;
+        private Label label16;
+        private Label label15;
+        private TextBox serveriporhost;
+        private GroupBox groupBox9;
+        private ListBox listBox1;
         private TabPage tabPage4;
         private GroupBox groupBox5;
         private Label label13;
@@ -965,44 +1021,11 @@
         private Label label2;
         private Label label1;
         private TrackBar trackBar1;
-        private GroupBox groupBox6;
-        private Label label14;
-        private GroupBox groupBox7;
-        private Label label19;
-        private Label label18;
-        private Label label17;
-        private TextBox pluginprogram;
-        private TextBox serverpassword;
-        private Label label16;
-        private Label label15;
-        private TextBox serveriporhost;
-        private ComboBox comboBox1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private TextBox serverport;
-        private TextBox textBox6;
+        private Button DeleteConfigurationButton;
         private Label label20;
-        private CheckBox checkBox1;
-        private ComboBox comboBox3;
-        private Label label21;
-        private GroupBox groupBox8;
-        private Button button8;
-        private CheckBox checkBox2;
-        private Label label22;
-        private TextBox plugoptions;
-        private Button button10;
-        private Button savefasturl;
-        private TabPage tabPage5;
-        private ToolStripMenuItem gToolStripMenuItem;
-        private ToolStripMenuItem fAQToolStripMenuItem;
-        private ToolStripMenuItem documentationToolStripMenuItem;
-        private ToolStripMenuItem knownProblemsToolStripMenuItem;
-        private ToolStripMenuItem basicUserManualToolStripMenuItem;
-        private ToolStripMenuItem fileToolStripMenuItem;
-        private ToolStripMenuItem preferencesToolStripMenuItem;
-        private ToolStripMenuItem getShadowsocksURLToolStripMenuItem;
-        private ToolStripMenuItem freeToolStripMenuItem;
-        private ToolStripMenuItem premiumToolStripMenuItem;
-        private ToolStripMenuItem sSHOceanToolStripMenuItem;
-        private ToolStripMenuItem iPRaceToolStripMenuItem;
+        private Button saveurlfast;
+        private ToolStripProgressBar toolStripProgressBar1;
+        private ToolStripStatusLabel toolStripStatusLabel1;
+        private ToolStripStatusLabel toolStripStatusLabel2;
     }
 }
