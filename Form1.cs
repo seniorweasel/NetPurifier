@@ -43,7 +43,35 @@ public partial class Form1 : Form
         }
 
     }
+    private async Task DownloadFileFromGitHub(string fileName)
+    {
+        string githubRawFileUrl = $"https://raw.githubusercontent.com/seniorweasel/netpurifier-filter/main/{fileName}";
+        string localFilePath = Path.Combine("filter-files", fileName);
 
+        using (HttpClient client = new HttpClient())
+        {
+            try
+            {
+                // Download the file from GitHub
+                HttpResponseMessage response = await client.GetAsync(githubRawFileUrl);
+                response.EnsureSuccessStatusCode();
+                byte[] fileBytes = await response.Content.ReadAsByteArrayAsync();
+
+                // Save the file locally in the 'filter-files' folder
+                File.WriteAllBytes(localFilePath, fileBytes);
+
+                richTextBox1.AppendText($"File '{fileName}' updated successfully.");
+            }
+            catch (HttpRequestException ex)
+            {
+                richTextBox1.AppendText($"Error downloading file '{fileName}': {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                richTextBox1.AppendText($"An error occurred: {ex.Message}");
+            }
+        }
+    }
     private void tabPage1_Click(object sender, EventArgs e)
     {
 
@@ -580,9 +608,13 @@ public partial class Form1 : Form
 
     }
 
-    private void button1_Click(object sender, EventArgs e)
-    {
-
+    private async void button1_Click(object sender, EventArgs e)
+    {       
+        await DownloadFileFromGitHub("light.bin");
+        await DownloadFileFromGitHub("moderate.bin");
+        await DownloadFileFromGitHub("strict.bin");
+        await DownloadFileFromGitHub("extrastrict.bin");
+        await DownloadFileFromGitHub("parents.bin");
     }
 
     private void gToolStripMenuItem_Click(object sender, EventArgs e)
