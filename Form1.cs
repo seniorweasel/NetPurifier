@@ -36,6 +36,24 @@ public partial class Form1 : Form
         richTextBox2.Text = textomanic.ReadToEnd();
         textomanic.Close();
 
+
+        // Reset the progress bar and status label
+        toolStripProgressBar1.Value = 0;
+        toolStripProgressBar1.Maximum = 104; // Assuming you are downloading 5 files
+        toolStripStatusLabel1.Text = "Downloading Update...";
+
+        // Create the 'lists' directory if it doesn't exist
+        string listsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "filter-files");
+        Directory.CreateDirectory(listsDirectory);
+
+        // Start downloading the files
+         DownloadFileAndUpdateProgressBar("light.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/light.bin");
+         DownloadFileAndUpdateProgressBar("moderate.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/moderate.bin");
+         DownloadFileAndUpdateProgressBar("strict.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/strict.bin");
+         DownloadFileAndUpdateProgressBar("extrastrict.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/extrastrict.bin");
+         DownloadFileAndUpdateProgressBar("parents.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/parents.bin");
+
+        toolStripStatusLabel1.Text = "Download completed.";
     }
     private ConfigWrapper configWrapper;
 
@@ -795,6 +813,7 @@ public partial class Form1 : Form
         await DownloadFileAndUpdateProgressBar("parents.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/parents.bin");
 
         toolStripStatusLabel1.Text = "Download completed.";
+        
     }
 
     private async Task DownloadFileAndUpdateProgressBar(string fileName, string url)
@@ -993,6 +1012,8 @@ public partial class Form1 : Form
         }
     }
 
+
+
     private void button4_Click(object sender, EventArgs e)
     {
         // Check if the hostname is empty, if so, set it to "A saved URL"
@@ -1048,4 +1069,3 @@ class WinINetInterop
     [DllImport("wininet.dll", SetLastError = true, CharSet = CharSet.Auto)]
     public static extern bool InternetSetOption(IntPtr hInternet, int dwOption, IntPtr lpBuffer, int dwBufferLength);
 }
-
