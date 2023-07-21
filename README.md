@@ -45,12 +45,3 @@ TODO: Keep track of changes and improvements in each version of NetPurifier.
 
 ## FAQs
 TODO: Frequently asked questions and their answers.
-
-## Contact Information
-TODO: Provide contact details or ways for users to reach out.
-
-## Screenshots or Demos
-TODO: Include screenshots or links to video demos showcasing NetPurifier in action.
-
-## Roadmap
-
