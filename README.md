@@ -5,6 +5,9 @@ NetPurifier is an internet optimization/proxy toolkit based on Shadowsocks Rust 
 
 ![Imgur](https://imgur.com/m4fde8d.png)
 ![Imgur](https://imgur.com/Ra8CI0W.png)
+
+
+
 Please note that this software has NO guarantee.
 
 ### What can NetPurifier do?
