@@ -31,8 +31,8 @@ We welcome contributions from the community! If you find any bugs, have feature 
 TODO: Add contributing guidelines.
 
 ## Known Issues and Limitations
--Sometimes download progress bar gets stuck or shows incorrect information
--Turn On/Turn Off Proxy button sometimes does not work very well.
+- Sometimes download progress bar gets stuck or shows incorrect information
+- Turn On/Turn Off Proxy button sometimes does not work very well.
 
 ## License
 This project is licensed under the [LICENSE_NAME] license. See the [LICENSE.md](LICENSE.md) file for details.
