@@ -35,15 +35,8 @@
             sSHOceanToolStripMenuItem = new ToolStripMenuItem();
             iPRaceToolStripMenuItem = new ToolStripMenuItem();
             premiumToolStripMenuItem = new ToolStripMenuItem();
-            fileToolStripMenuItem = new ToolStripMenuItem();
-            preferencesToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             gToolStripMenuItem = new ToolStripMenuItem();
-            guideToolStripMenuItem = new ToolStripMenuItem();
-            fAQToolStripMenuItem = new ToolStripMenuItem();
-            documentationToolStripMenuItem = new ToolStripMenuItem();
-            knownProblemsToolStripMenuItem = new ToolStripMenuItem();
-            basicUserManualToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             toolStripStatusLabel2 = new ToolStripStatusLabel();
@@ -80,12 +73,12 @@
             listBox1 = new ListBox();
             tabPage4 = new TabPage();
             groupBox5 = new GroupBox();
-            label13 = new Label();
             label12 = new Label();
             label11 = new Label();
             label10 = new Label();
             label9 = new Label();
             label8 = new Label();
+            label13 = new Label();
             label7 = new Label();
             groupBox4 = new GroupBox();
             label6 = new Label();
@@ -98,6 +91,7 @@
             textBox6 = new TextBox();
             label14 = new Label();
             groupBox2 = new GroupBox();
+            checkBoxStartup = new CheckBox();
             label20 = new Label();
             button8 = new Button();
             button3 = new Button();
@@ -128,7 +122,7 @@
             // menuStrip1
             // 
             menuStrip1.BackColor = SystemColors.ControlLightLight;
-            menuStrip1.Items.AddRange(new ToolStripItem[] { getShadowsocksURLToolStripMenuItem, fileToolStripMenuItem, preferencesToolStripMenuItem, aboutToolStripMenuItem, guideToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { getShadowsocksURLToolStripMenuItem, aboutToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(635, 24);
@@ -147,8 +141,9 @@
             // 
             freeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sSHOceanToolStripMenuItem, iPRaceToolStripMenuItem });
             freeToolStripMenuItem.Name = "freeToolStripMenuItem";
-            freeToolStripMenuItem.Size = new Size(123, 22);
+            freeToolStripMenuItem.Size = new Size(180, 22);
             freeToolStripMenuItem.Text = "Free";
+            freeToolStripMenuItem.Click += freeToolStripMenuItem_Click;
             // 
             // sSHOceanToolStripMenuItem
             // 
@@ -167,20 +162,8 @@
             // premiumToolStripMenuItem
             // 
             premiumToolStripMenuItem.Name = "premiumToolStripMenuItem";
-            premiumToolStripMenuItem.Size = new Size(123, 22);
+            premiumToolStripMenuItem.Size = new Size(180, 22);
             premiumToolStripMenuItem.Text = "Premium";
-            // 
-            // fileToolStripMenuItem
-            // 
-            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(37, 20);
-            fileToolStripMenuItem.Text = "File";
-            // 
-            // preferencesToolStripMenuItem
-            // 
-            preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            preferencesToolStripMenuItem.Size = new Size(80, 20);
-            preferencesToolStripMenuItem.Text = "Preferences";
             // 
             // aboutToolStripMenuItem
             // 
@@ -192,40 +175,9 @@
             // gToolStripMenuItem
             // 
             gToolStripMenuItem.Name = "gToolStripMenuItem";
-            gToolStripMenuItem.Size = new Size(167, 22);
+            gToolStripMenuItem.Size = new Size(180, 22);
             gToolStripMenuItem.Text = "About NetPurifier";
             gToolStripMenuItem.Click += gToolStripMenuItem_Click;
-            // 
-            // guideToolStripMenuItem
-            // 
-            guideToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fAQToolStripMenuItem, documentationToolStripMenuItem, knownProblemsToolStripMenuItem, basicUserManualToolStripMenuItem });
-            guideToolStripMenuItem.Name = "guideToolStripMenuItem";
-            guideToolStripMenuItem.Size = new Size(55, 20);
-            guideToolStripMenuItem.Text = "Guides";
-            // 
-            // fAQToolStripMenuItem
-            // 
-            fAQToolStripMenuItem.Name = "fAQToolStripMenuItem";
-            fAQToolStripMenuItem.Size = new Size(252, 22);
-            fAQToolStripMenuItem.Text = "FAQ";
-            // 
-            // documentationToolStripMenuItem
-            // 
-            documentationToolStripMenuItem.Name = "documentationToolStripMenuItem";
-            documentationToolStripMenuItem.Size = new Size(252, 22);
-            documentationToolStripMenuItem.Text = "Documentation";
-            // 
-            // knownProblemsToolStripMenuItem
-            // 
-            knownProblemsToolStripMenuItem.Name = "knownProblemsToolStripMenuItem";
-            knownProblemsToolStripMenuItem.Size = new Size(252, 22);
-            knownProblemsToolStripMenuItem.Text = "Known Problems";
-            // 
-            // basicUserManualToolStripMenuItem
-            // 
-            basicUserManualToolStripMenuItem.Name = "basicUserManualToolStripMenuItem";
-            basicUserManualToolStripMenuItem.Size = new Size(252, 22);
-            basicUserManualToolStripMenuItem.Text = "Basic User Manual for home users";
             // 
             // statusStrip1
             // 
@@ -294,9 +246,11 @@
             richTextBox1.ForeColor = Color.Lime;
             richTextBox1.Location = new Point(0, 0);
             richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
             richTextBox1.Size = new Size(465, 282);
             richTextBox1.TabIndex = 0;
             richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            richTextBox1.TextChanged += richTextBox1_TextChanged;
             // 
             // tabPage2
             // 
@@ -582,12 +536,12 @@
             // 
             // groupBox5
             // 
-            groupBox5.Controls.Add(label13);
             groupBox5.Controls.Add(label12);
             groupBox5.Controls.Add(label11);
             groupBox5.Controls.Add(label10);
             groupBox5.Controls.Add(label9);
             groupBox5.Controls.Add(label8);
+            groupBox5.Controls.Add(label13);
             groupBox5.Controls.Add(label7);
             groupBox5.Location = new Point(3, 67);
             groupBox5.Name = "groupBox5";
@@ -595,6 +549,58 @@
             groupBox5.TabIndex = 4;
             groupBox5.TabStop = false;
             groupBox5.Text = "Explanation:";
+            groupBox5.Enter += groupBox5_Enter;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.ForeColor = Color.FromArgb(192, 0, 0);
+            label12.ImageAlign = ContentAlignment.MiddleRight;
+            label12.Location = new Point(6, 146);
+            label12.Name = "label12";
+            label12.Size = new Size(152, 15);
+            label12.TabIndex = 3;
+            label12.Text = "Parents (Extra Strict + Porn)";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.ForeColor = Color.Blue;
+            label11.Location = new Point(5, 122);
+            label11.Name = "label11";
+            label11.Size = new Size(167, 15);
+            label11.TabIndex = 3;
+            label11.Text = "Extra Strict (Strict + Gambling)";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.ForeColor = Color.Goldenrod;
+            label10.Location = new Point(5, 98);
+            label10.Name = "label10";
+            label10.Size = new Size(171, 15);
+            label10.TabIndex = 3;
+            label10.Text = "Strict (Moderate + Social Links)";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.ForeColor = Color.Green;
+            label9.Location = new Point(6, 73);
+            label9.Name = "label9";
+            label9.Size = new Size(350, 15);
+            label9.TabIndex = 3;
+            label9.Text = "Moderate (Dan Pollock's Host File + Steven Black's fake news list)";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.ForeColor = Color.FromArgb(0, 192, 192);
+            label8.Location = new Point(6, 48);
+            label8.Name = "label8";
+            label8.Size = new Size(424, 15);
+            label8.TabIndex = 3;
+            label8.Text = "Light (Dan Pollock's Hosts File - blocks ads, telemetry, malware links and more)";
             // 
             // label13
             // 
@@ -607,64 +613,11 @@
             label13.Text = "NOTE: Selecting a stricter rule will affect your performance.\r\n\r\n\r\n";
             label13.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.ForeColor = Color.FromArgb(192, 0, 0);
-            label12.ImageAlign = ContentAlignment.MiddleRight;
-            label12.Location = new Point(3, 135);
-            label12.Name = "label12";
-            label12.Size = new Size(366, 30);
-            label12.TabIndex = 3;
-            label12.Text = "Parents - UnifiedHosts File + Fake News + Social + Gambling + Porn\r\n(Around 268.000 rules)\r\n";
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.ForeColor = Color.Blue;
-            label11.Location = new Point(3, 118);
-            label11.Name = "label11";
-            label11.Size = new Size(342, 15);
-            label11.TabIndex = 3;
-            label11.Text = "Extra Strict - UnifiedHosts file + Fake News + Social + Gambling\r\n";
-            label11.Click += label11_Click;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.ForeColor = Color.Goldenrod;
-            label10.Location = new Point(3, 100);
-            label10.Name = "label10";
-            label10.Size = new Size(245, 15);
-            label10.TabIndex = 3;
-            label10.Text = "Strict - UnifiedHosts file + Fake news + Social\r\n";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.ForeColor = Color.Green;
-            label9.Location = new Point(4, 67);
-            label9.Name = "label9";
-            label9.Size = new Size(382, 45);
-            label9.TabIndex = 3;
-            label9.Text = "Moderate - Uses Steven Black's UnifiedHosts file. (around 220.000 rules)\r\n(Blocks Ads + Malware links)\r\n\r\n";
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.ForeColor = Color.FromArgb(0, 192, 192);
-            label8.Location = new Point(5, 34);
-            label8.Name = "label8";
-            label8.Size = new Size(309, 30);
-            label8.TabIndex = 3;
-            label8.Text = "Light - Uses Dan Pollock's hosts file. (around 11.750 rules)\r\nOptimized for fast and best web experience\r\n";
-            label8.Click += label8_Click;
-            // 
             // label7
             // 
             label7.AutoSize = true;
             label7.ForeColor = Color.Red;
-            label7.Location = new Point(5, 16);
+            label7.Location = new Point(5, 24);
             label7.Name = "label7";
             label7.Size = new Size(269, 15);
             label7.TabIndex = 3;
@@ -778,6 +731,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(checkBoxStartup);
             groupBox2.Controls.Add(label20);
             groupBox2.Controls.Add(textBox6);
             groupBox2.Controls.Add(button8);
@@ -791,6 +745,17 @@
             groupBox2.TabIndex = 4;
             groupBox2.TabStop = false;
             groupBox2.Text = "Controls";
+            // 
+            // checkBoxStartup
+            // 
+            checkBoxStartup.AutoSize = true;
+            checkBoxStartup.Location = new Point(7, 224);
+            checkBoxStartup.Name = "checkBoxStartup";
+            checkBoxStartup.Size = new Size(95, 19);
+            checkBoxStartup.TabIndex = 15;
+            checkBoxStartup.Text = "Start on boot";
+            checkBoxStartup.UseVisualStyleBackColor = true;
+            checkBoxStartup.CheckedChanged += checkBoxStartup_CheckedChanged;
             // 
             // label20
             // 
@@ -861,7 +826,7 @@
             // saveurlfast
             // 
             saveurlfast.ForeColor = Color.Teal;
-            saveurlfast.Location = new Point(391, 27);
+            saveurlfast.Location = new Point(391, 28);
             saveurlfast.Name = "saveurlfast";
             saveurlfast.Size = new Size(99, 23);
             saveurlfast.TabIndex = 17;
@@ -952,7 +917,6 @@
         private ToolStripMenuItem aboutToolStripMenuItem;
         private StatusStrip statusStrip1;
         private GroupBox groupBox1;
-        private ToolStripMenuItem guideToolStripMenuItem;
         private GroupBox groupBox2;
         private Button button3;
         private Button button2;
@@ -965,12 +929,6 @@
         private Button button8;
         private CheckBox checkBox2;
         private ToolStripMenuItem gToolStripMenuItem;
-        private ToolStripMenuItem fAQToolStripMenuItem;
-        private ToolStripMenuItem documentationToolStripMenuItem;
-        private ToolStripMenuItem knownProblemsToolStripMenuItem;
-        private ToolStripMenuItem basicUserManualToolStripMenuItem;
-        private ToolStripMenuItem fileToolStripMenuItem;
-        private ToolStripMenuItem preferencesToolStripMenuItem;
         private ToolStripMenuItem getShadowsocksURLToolStripMenuItem;
         private ToolStripMenuItem freeToolStripMenuItem;
         private ToolStripMenuItem premiumToolStripMenuItem;
@@ -1007,11 +965,6 @@
         private TabPage tabPage4;
         private GroupBox groupBox5;
         private Label label13;
-        private Label label12;
-        private Label label11;
-        private Label label10;
-        private Label label9;
-        private Label label8;
         private Label label7;
         private GroupBox groupBox4;
         private Label label6;
@@ -1027,5 +980,11 @@
         private ToolStripProgressBar toolStripProgressBar1;
         private ToolStripStatusLabel toolStripStatusLabel1;
         private ToolStripStatusLabel toolStripStatusLabel2;
+        private Label label9;
+        private Label label8;
+        private Label label12;
+        private Label label11;
+        private Label label10;
+        private CheckBox checkBoxStartup;
     }
 }

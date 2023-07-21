@@ -1,0 +1,44 @@
+{
+  "entries": [
+    {
+      "protocoloption": "http (TCP/UDP)",
+      "hostname": "nl02.proxysocks.xyz",
+      "serverpot": 8388,
+      "encryptionManage": "chacha20-ietf-poly1305",
+      "password": "ZDFlY",
+      "plugin": "",
+      "plugopts": "",
+      "shadowUrl": ""
+    },
+    {
+      "protocoloption": "http (TCP/UDP)",
+      "hostname": "fr02.proxysocks.xyz",
+      "serverpot": 8388,
+      "encryptionManage": "chacha20-ietf-poly1305",
+      "password": "MDE5N",
+      "plugin": "",
+      "plugopts": "",
+      "shadowUrl": ""
+    },
+    {
+      "protocoloption": "",
+      "hostname": "A saved URL",
+      "serverpot": 0,
+      "encryptionManage": "",
+      "password": "",
+      "plugin": "",
+      "plugopts": "",
+      "shadowUrl": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpaREZsWQ==@nl02.proxysocks.xyz:8388#sshOcean-nl02"
+    },
+    {
+      "protocoloption": "",
+      "hostname": "A saved URL",
+      "serverpot": 0,
+      "encryptionManage": "",
+      "password": "",
+      "plugin": "",
+      "plugopts": "",
+      "shadowUrl": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpaREZsWQ==@nl02.proxysocks.xyz:8388#sshOcean-nl02"
+    }
+  ]
+}

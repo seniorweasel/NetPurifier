@@ -21,7 +21,7 @@ Please note that this software has NO guarantee.
 
 ## Installation
  - Just download the client from the "Releases" or from the netpurifier website
- - run the NetPurifier.exe
+ - run the NetPurifierInstaller.exe
 
 ## Usage
 - Check Guides and documentation for it. Soon!

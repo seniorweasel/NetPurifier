@@ -19,6 +19,13 @@ namespace NetPurifier;
 
 public partial class Form1 : Form
 {
+
+    private const string NetPurifierFileName = "NetPurifier.exe";
+    private string NetPurifierPath => Path.Combine(Application.StartupPath, NetPurifierFileName);
+    private string StartupFolderPath => Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup);
+    private string StartupShortcutPath => Path.Combine(StartupFolderPath, NetPurifierFileName + ".lnk");
+
+
     public Form1()
     {
         InitializeComponent();
@@ -36,10 +43,15 @@ public partial class Form1 : Form
         richTextBox2.Text = textomanic.ReadToEnd();
         textomanic.Close();
 
+        // Check if the application's shortcut exists in the Startup folder
+        bool isStartupEnabled = IsNetPurifierInStartupFolder();
+
+        // Set the checkbox status accordingly
+        checkBoxStartup.Checked = isStartupEnabled;
 
         // Reset the progress bar and status label
         toolStripProgressBar1.Value = 0;
-        toolStripProgressBar1.Maximum = 104; // Assuming you are downloading 5 files
+        toolStripProgressBar1.Maximum = 101; // Assuming you are downloading 5 files
         toolStripStatusLabel1.Text = "Downloading Update...";
 
         // Create the 'lists' directory if it doesn't exist
@@ -47,11 +59,11 @@ public partial class Form1 : Form
         Directory.CreateDirectory(listsDirectory);
 
         // Start downloading the files
-         DownloadFileAndUpdateProgressBar("light.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/light.bin");
-         DownloadFileAndUpdateProgressBar("moderate.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/moderate.bin");
-         DownloadFileAndUpdateProgressBar("strict.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/strict.bin");
-         DownloadFileAndUpdateProgressBar("extrastrict.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/extrastrict.bin");
-         DownloadFileAndUpdateProgressBar("parents.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/parents.bin");
+        DownloadFileAndUpdateProgressBar("light.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/light.bin");
+        DownloadFileAndUpdateProgressBar("moderate.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/moderate.bin");
+        DownloadFileAndUpdateProgressBar("strict.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/strict.bin");
+        DownloadFileAndUpdateProgressBar("extrastrict.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/extrastrict.bin");
+        DownloadFileAndUpdateProgressBar("parents.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/parents.bin");
 
         toolStripStatusLabel1.Text = "Download completed.";
     }
@@ -110,7 +122,7 @@ public partial class Form1 : Form
         }
         else
         {
-            richTextBox1.AppendText("Config file not found.\n");
+            richTextBox1.AppendText("Saved configurations loaded! Check them in Saved Proxies & Settings tab!\n");
         }
     }
 
@@ -188,7 +200,7 @@ public partial class Form1 : Form
         }
     }
 
-   
+
     public class ConfigEntry
     {
         [JsonIgnore]
@@ -813,7 +825,7 @@ public partial class Form1 : Form
         await DownloadFileAndUpdateProgressBar("parents.bin", "https://raw.githubusercontent.com/seniorweasel/netpurifier-updaterepository/main/filter-files/parents.bin");
 
         toolStripStatusLabel1.Text = "Download completed.";
-        
+
     }
 
     private async Task DownloadFileAndUpdateProgressBar(string fileName, string url)
@@ -892,7 +904,10 @@ public partial class Form1 : Form
 
     private void gToolStripMenuItem_Click(object sender, EventArgs e)
     {
+        string url = "https://github.com/seniorweasel/NetPurifier";
 
+        // Open the URL in the default browser
+        Process.Start("explorer.exe", url);
     }
 
     private void sSHOceanToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1055,6 +1070,71 @@ public partial class Form1 : Form
         DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
 
 
+    }
+
+    private void richTextBox1_TextChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    private void groupBox5_Enter(object sender, EventArgs e)
+    {
+
+    }
+
+    private void freeToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void checkBox3_CheckedChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    private void checkBoxStartup_CheckedChanged(object sender, EventArgs e)
+    {
+        // Handle the checkbox state change
+        SetNetPurifierStartupEnabled(checkBoxStartup.Checked);
+    }
+
+    private void buttonSave_Click(object sender, EventArgs e)
+    {
+        // Save any other settings or close the form, if needed
+        this.Close();
+    }
+
+    private bool IsNetPurifierInStartupFolder()
+    {
+        return File.Exists(StartupShortcutPath);
+    }
+
+    private void SetNetPurifierStartupEnabled(bool enabled)
+    {
+        if (enabled)
+        {
+            // Create the shortcut in the Startup folder
+            CreateShortcut(NetPurifierPath, StartupShortcutPath);
+        }
+        else
+        {
+            // Delete the shortcut from the Startup folder
+            if (File.Exists(StartupShortcutPath))
+            {
+                File.Delete(StartupShortcutPath);
+            }
+        }
+    }
+
+    private void CreateShortcut(string targetPath, string shortcutPath)
+    {
+        Type shellType = Type.GetTypeFromProgID("WScript.Shell");
+        dynamic shell = Activator.CreateInstance(shellType);
+        var shortcut = shell.CreateShortcut(shortcutPath);
+        shortcut.TargetPath = targetPath;
+        shortcut.Save();
+        Marshal.ReleaseComObject(shortcut);
+        Marshal.ReleaseComObject(shell);
     }
 }
 // Dictionary to map trackbar values to filenames
