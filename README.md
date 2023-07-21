@@ -1,8 +1,10 @@
 # NetPurifier v0.1.0
 #### Internet Optimization/Proxy Toolkit
-![NetPurifier](https://imgur.com/SSp2Kne.png)
+
 NetPurifier is an internet optimization/proxy toolkit based on Shadowsocks Rust client. (You can think like it's a shadowsocks-rust gui with several additional features) You can make your web experience less suck by using NetPurifier. The main goal of Netpurifier is providing a safer and less annoying internet experience. You can bypass geo-restrictions, block ads system-wide, block annoying stuff.
 
+![Imgur](https://imgur.com/m4fde8d.png)
+![Imgur](https://imgur.com/Ra8CI0W.png)
 Please note that this software has NO guarantee.
 
 ### What can NetPurifier do?
